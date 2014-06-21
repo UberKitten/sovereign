@@ -11,7 +11,7 @@ message_size_limit = 51200000
 append_dot_mydomain = no
 
 # Uncomment the next line to generate "delayed mail" warnings
-#delay_warning_time = 4h
+delay_warning_time = 4h
 
 readme_directory = no
 
@@ -36,15 +36,16 @@ unverified_recipient_reject_code = 554
 unverified_sender_reject_code = 554
 
 # TLS parameters
-smtpd_tls_cert_file=/etc/ssl/certs/wildcard_combined.pem
-smtpd_tls_key_file=/etc/ssl/private/wildcard_private.key
+smtpd_tls_cert_file=/etc/ssl/certs/mail_private.crt
+smtpd_tls_key_file=/etc/ssl/private/mail_private.key
+smtpd_tls_CAfile=/etc/ssl/certs/ca-bundle.crt
 smtpd_use_tls=yes
 smtpd_tls_auth_only = yes
 smtp_tls_security_level = may
 smtp_tls_loglevel = 2
 smtpd_tls_received_header = yes
 smtp_tls_note_starttls_offer = yes
-smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+smtp_tls_CAfile = $smtpd_tls_CAfile
 
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
@@ -84,7 +85,7 @@ virtual_transport = dovecot
 dovecot_destination_recipient_limit = 1
 virtual_mailbox_domains = pgsql:/etc/postfix/pgsql-virtual-mailbox-domains.cf
 virtual_mailbox_maps = pgsql:/etc/postfix/pgsql-virtual-mailbox-maps.cf
-virtual_alias_maps = pgsql:/etc/postfix/pgsql-virtual-alias-maps.cf
+virtual_alias_maps = pgsql:/etc/postfix/pgsql-virtual-alias-maps.cf,pgsql:/etc/postfix/pgsql-email2email.cf
 local_recipient_maps = $virtual_mailbox_maps
 
 # OpenDKIM
@@ -114,3 +115,12 @@ postscreen_greet_action = enforce
 # Remove local client IP from headers
 smtp_header_checks = pcre:/etc/postfix/maps/smtp_header_checks.pcre
 {% endif %}
+
+# http://tekman.livejournal.com/83609.html
+sender_dependent_relayhost_maps = hash:/etc/postfix/sender_dependent_relayhost.cf
+smtp_tls_CApath = /etc/postfix/certs
+smtp_tls_policy_maps = hash:/etc/postfix/smtp_tls_policy
+smtp_tls_session_cache_database = btree:${queue_directory}/smtp_cache
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_password.cf
+smtp_sasl_security_options = noanonymous

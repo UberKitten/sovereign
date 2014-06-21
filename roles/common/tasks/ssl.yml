@@ -1,18 +1,26 @@
-- name: Copy SSL private key into place
-  copy: src=wildcard_private.key dest=/etc/ssl/private/wildcard_private.key group=ssl-cert owner=root mode=640
+#- name: Copy SSL private key into place
+#  copy: src=wildcard_private.key dest=/etc/ssl/private/wildcard_private.key group=ssl-cert owner=root mode=640
 
-- name: Copy SSL public certificate into place
-  copy: src=wildcard_public_cert.crt dest=/etc/ssl/certs/wildcard_public_cert.crt group=root owner=root mode=644
+#- name: Copy SSL public certificate into place
+#  copy: src=wildcard_public_cert.crt dest=/etc/ssl/certs/wildcard_public_cert.crt group=root owner=root mode=644
 
-- name: Copy CA combined certificate into place
-  copy: src=wildcard_ca.pem dest=/etc/ssl/certs/wildcard_ca.pem group=root owner=root mode=644
+#- name: Copy CA combined certificate into place
+#  copy: src=wildcard_ca.pem dest=/etc/ssl/certs/wildcard_ca.pem group=root owner=root mode=644
 
-- name: Create a combined version of the public cert with intermediate and root CAs
-  shell: cat /etc/ssl/certs/wildcard_public_cert.crt /etc/ssl/certs/wildcard_ca.pem >
-    /etc/ssl/certs/wildcard_combined.pem creates=/etc/ssl/certs/wildcard_combined.pem
+#- name: Create a combined version of the public cert with intermediate and root CAs
+#  shell: cat /etc/ssl/certs/wildcard_public_cert.crt /etc/ssl/certs/wildcard_ca.pem >
+#    /etc/ssl/certs/wildcard_combined.pem creates=/etc/ssl/certs/wildcard_combined.pem
 
-- name: Set permissions on combined public cert
-  file: name=/etc/ssl/certs/wildcard_combined.pem mode=644
+#- name: Copy StartCom Class 1 intermediate certificate into place
+#  copy: src=StartCom_Certification_Authority_Class1.pem dest=/etc/ssl/certs/StartCom_Certification_Authority_Class1.pem group=root owner=root mode=644
+
+- name: Download StartCom Class 1 intermediate certificate
+  get_url: url=https://www.startssl.com/certs/sub.class1.server.ca.pem
+           dest=/etc/ssl/certs/StartCom_Certification_Authority_Class1.pem group=root owner=root mode=644
+
+# On DigitalOcean Debian 7 I had a Python error with Ansible with this task
+#- name: Set permissions on combined public cert
+#  file: name=/etc/ssl/certs/wildcard_combined.pem mode=644
 
 - name: Enable Apache SSL module
   command: a2enmod ssl creates=/etc/apache2/mods-enabled/ssl.load

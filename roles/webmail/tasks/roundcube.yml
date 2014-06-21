@@ -38,6 +38,12 @@
 - name: Remove old sites-enabled/roundcube symlink (new one will be created by a2ensite)
   command: rm /etc/apache2/sites-enabled/roundcube removes=/etc/apache2/sites-enabled/roundcube
 
+- name: Copy SSL private key into place
+  copy: src=mail.key dest=/etc/ssl/private/mail.key group=ssl-cert owner=root mode=640
+
+- name: Copy SSL public certificate into place
+  copy: src=mail.crt dest=/etc/ssl/certs/mail.crt group=root owner=root mode=644
+
 - name: Configure the Apache HTTP server for roundcube
   template: src=etc_apache2_sites-available_roundcube.j2 dest=/etc/apache2/sites-available/roundcube.conf group=root owner=root force=yes
 

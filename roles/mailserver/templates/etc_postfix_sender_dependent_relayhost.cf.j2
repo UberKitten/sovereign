@@ -1,0 +1,3 @@
+{% for forward in mail_forwards %}
+{{ forward.email }}	[{{ forward.smtp_server }}]:{{ forward.smtp_port }}
+{% endfor %}
