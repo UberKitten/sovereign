@@ -54,17 +54,22 @@ else
 	BACKUP="$YEAR$MOY$DOM-$TIME-daily"
 fi
 
-# Stop postgres
-monit stop postgres
-
 # Do backups
 for dir in $DIRS; do
 	echo "==> create $BACKUP-$dir"
+	
+	# Only stop postgres if we're backing up its data
+	if [ "$dir" = "var/lib/postgresql/9.1/main" ]; then
+			monit stop postgres
+	fi
+	
 	$TARSNAP $EXTRA_FLAGS -c -f $BACKUP-$dir $dir
-done
+	
+	if [ "$dir" = "var/lib/postgresql/9.1/main" ]; then
+			monit start postgres
+	fi
 
-# Start postgres
-monit start postgres
+done
 
 # Backups done, time for cleaning up old archives
 
