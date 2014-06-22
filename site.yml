@@ -13,14 +13,14 @@
     - common
     - mailserver
     - webmail
-    - blog
-    - ircbouncer
-    - xmpp
+#    - blog
+#    - ircbouncer
+#    - xmpp
     - monitoring
     - owncloud
     - vpn
     - tarsnap
-    - news
-    - git
-    - newebe
+#    - news
+#    - git
+#    - newebe
     - readlater
