@@ -25,27 +25,21 @@ mail_db_password: TODO
 mail_virtual_domains:
   - name: "{{ domain }}"
     pk_id: 1
-#  - name: TODO.com
-#    pk_id: 2
 mail_virtual_users:
   - account: "{{ main_user_name }}"
     domain: "{{ domain }}"
     password_hash: TODO
     domain_pk_id: 1
-#  - account: "{{ TODO }}"
-#    domain: "{{ domain }}"
-#    password_hash: TODO
-#    domain_pk_id: 2
 mail_virtual_aliases:
-  - source: "root@{{ domain }}"
+  - source: "@{{ domain }}"
     destination: "{{ admin_email }}"
     domain_pk_id: 1
-  - source: "postmaster@{{ domain }}"
-    destination: "{{ admin_email }}"
-    domain_pk_id: 1
-  - source: "webmaster@{{ domain }}"
-    destination: "{{ admin_email }}"
-    domain_pk_id: 1
+mail_forwards:
+  - email: TODO
+    password: TODO
+    smtp_server: TODO
+    smtp_port: TODO
+
 mail_header_privacy: 1
 
 # z-push
@@ -82,5 +76,6 @@ selfoss_username: "{{ main_user_name }}"
 selfoss_password_hash: "TODO"
 
 # wallabag
-wallabag_salt: TODO
+# just make the salt a small random string
+wallabag_salt: TODO 
 wallabag_db_password: TODO
