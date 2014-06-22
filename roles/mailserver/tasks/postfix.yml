@@ -72,6 +72,15 @@
     - smtp_tls_policy.cf
   notify: restart postfix
 
+- name: Create postmap db for sender_dependent_relayhost.cf
+  shell: postmap /etc/postfix/sender_dependent_relayhost.cf creates=/etc/postfix/sender_dependent_relayhost.cf.db
+
+- name: Create postmap db for sasl_password.cf
+  shell: postmap /etc/postfix/sasl_password.cf creates=/etc/postfix/sasl_password.cf.db
+
+- name: Create postmap db for smtp_tls_policy.cf
+  shell: postmap /etc/postfix/smtp_tls_policy.cf creates=/etc/postfix/smtp_tls_policy.cf.db
+
 - name: Set firewall rules for postfix
   ufw: rule=allow port={{ item }} proto=tcp
   with_items:
