@@ -13,5 +13,5 @@
     - postfix
     - sshd
     - tomcat
-    - znc
+#    - znc
   notify: restart monit
