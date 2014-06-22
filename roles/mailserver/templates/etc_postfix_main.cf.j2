@@ -119,7 +119,7 @@ smtp_header_checks = pcre:/etc/postfix/maps/smtp_header_checks.pcre
 # http://tekman.livejournal.com/83609.html
 sender_dependent_relayhost_maps = hash:/etc/postfix/sender_dependent_relayhost.cf
 smtp_tls_CApath = /etc/postfix/certs
-smtp_tls_policy_maps = hash:/etc/postfix/smtp_tls_policy
+smtp_tls_policy_maps = hash:/etc/postfix/smtp_tls_policy.cf
 smtp_tls_session_cache_database = btree:${queue_directory}/smtp_cache
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_password.cf
