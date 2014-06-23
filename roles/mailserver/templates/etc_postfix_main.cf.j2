@@ -46,6 +46,9 @@ smtp_tls_loglevel = 2
 smtpd_tls_received_header = yes
 smtp_tls_note_starttls_offer = yes
 smtp_tls_CAfile = $smtpd_tls_CAfile
+# http://www.postfix.org/FORWARD_SECRECY_README.html
+smtp_tls_ciphers = medium
+
 
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
