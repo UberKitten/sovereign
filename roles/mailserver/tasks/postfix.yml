@@ -57,7 +57,7 @@
   notify: restart postfix
 
 - name: Create a combined version of the public cert with intermediate and root CAs
-  shell: cat /etc/ssl/private/mail.key /etc/ssl/certs/mail.crt /etc/ssl/certs/StartCom_Certification_Authority_Class1.pem >
+  shell: cat /etc/ssl/certs/mail.crt /etc/ssl/certs/StartCom_Certification_Authority_Class1.pem /etc/ssl/certs/StartCom_Certification_Authority.pem >
   /etc/ssl/certs/mail_combined.crt creates=/etc/ssl/certs/mail_combined.crt
 
 - name: Copy additional postfix configuration files
