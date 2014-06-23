@@ -17,11 +17,20 @@
     SSLCACertificateFile    /etc/ssl/certs/StartCom_Certification_Authority.pem
     Header add Strict-Transport-Security "max-age=15768000; includeSubdomains"
 
-    DocumentRoot            /var/www/wallabag
+    Alias /wallabag /var/www/wallabag
+    ProxyPass /wallabag !
+
+#    DocumentRoot            /var/www/wallabag
     Options                 -Indexes
 
-    ErrorLog                /var/log/apache2/wallabag.info-error_log
-    CustomLog               /var/log/apache2/wallabag.info-access_log common
+
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:8082/
+    ProxyPassReverse / http://localhost:8082/
+
+	
+    ErrorLog                /var/log/apache2/read.info-error_log
+    CustomLog               /var/log/apache2/read.info-access_log common
 
     <Directory /var/www/wallabag>
         AllowOverride All
