@@ -1,4 +1,4 @@
-*This is my (T3hUb3rK1tten's) fork of sovereign, modified for my own purposes. It has some unnecessary services disabled by default and tweaks added. Contact me on https://mwe.st if you have any questions.*
+*This was my fork of sovereign, modified for my own purposes. It has some unnecessary services disabled by default and tweaks added.*
 
 h1. Introduction
 
